@@ -1,0 +1,102 @@
+What I'm building
+
+
+Deciphered question about initial working version implementation
+Deciphered question about initial working version implementation
+Just to make sure I answer the right question — "what runs today" could mean a couple different things depending on where you're standing in the process:
+
+Literally, what Python code should I run today — but per the Quickstart FAQ, you're not supposed to be writing model code yet. You're in Level 5 (Inception): charter, repo, issue backlog, guardrails doc. No model this week.
+What's the first GitHub Issue / walking skeleton — i.e. the minimum end-to-end thing that should "run" once you get to Level 6 (Iteration 1). That's a backlog-seeding question, not a today's-code question.
+Given where you are (still finishing the charter), which one did you mean?
+
+1
+
+
+Reconciled scheduling constraints and identified alternative analytical task
+Reconciled scheduling constraints and identified alternative analytical task
+Straight answer: no model code today. That's not me being cautious — it's literally what the Quickstart FAQ says for where you are:
+
+LVL 5 INCEPTION ...... Decide what you're building + how you'll know it's good
+You are here: LVL 5. Do NOT try to build a good model this week. That's LVL 7 you're thinking of. Wrong level. Slow down.
+
+That's the whole level. No model. Just a finish line and a repo.
+
+So today isn't a training-script day. It's a documents-and-repo day.
+
+That said, there IS one small, legitimate thing that's worth running in Python today, and it directly closes a loose thread from earlier: confirming whether Price_Per_SqFt is actually leakage, rather than assuming it from the column name. That's not model-building — it's just inspecting your CSV, which fits fine inside Level 5.
+
+Something like:
+
+python
+import pandas as pd
+
+df = pd.read_csv("Texas_Residential_Real_Estate_Intelligence_2026.csv")
+
+# Check a few rows to see if Price_Per_SqFt == listPrice / sqft
+check = df[["listPrice", "sqft", "Price_Per_SqFt"]].head(10).copy()
+check["calculated"] = check["listPrice"] / check["sqft"]
+print(check)
+If Price_Per_SqFt lines up with listPrice / sqft (even with rounding), that confirms the leakage call and you can drop it with a clear conscience — and cite it in your charter/reflection as something you verified, not assumed.
+
+Beyond that, "what runs today" is really: finish charter.md, seed your 3-5 GitHub Issues, and draft agent-guardrails.md. Want to pick up on the issue backlog next, since that's the other piece still open?
+
+What's broken or missing
+
+
+Audited project deliverables against checklist systematically
+Audited project deliverables against checklist systematically
+Let me check that against the actual checklist in your Quickstart FAQ, section 9.0:
+
+[ ] charter.md ............ problem, path, data/tools, definition of good, scope guard, roles
+[ ] issue backlog ......... 3-5 Issues framing the first working version
+[ ] agent-guardrails.md ... the rules that keep your AI partner on task
+[ ] reflection.md ......... which workflow step were you on when Housing stopped? what's different this time?
+
+Going through each against what we've actually nailed down together:
+
+charter.md — mostly done, one gap:
+
+✅ What we're building — drafted
+✅ Definition of good enenough — MAE + baseline/turnaround threshold
+✅ Scope guard — the three bullets we just finalized
+✅ Team & roles — solo, Prompt Masters track
+❓ Data/tools section — we've talked around this (the CSV name, Keras, k-fold) but haven't explicitly written this section out. Worth confirming it's actually written down, not just implied.
+Issue backlog — status unclear. We haven't drafted these together in this conversation. If they exist from earlier work, fine — if not, this is a real gap, since it's graded.
+
+agent-guardrails.md — not touched today. Also graded, also missing from what we've done together.
+
+reflection.md — not touched today.
+
+One more loose end, not on the checklist but still open: you never confirmed whether Price_Per_SqFt actually equals listPrice / sqft. I gave you the code to check it, but I don't know if you ran it. That matters because your charter's scope guard should say you verified the leakage, not assumed it.
+
+Which of these do you want to close first — the data/tools section of the charter, the issue backlog, or the guardrails doc?
+
+What you're doing next
+
+
+Deliberated how to redirect conversation productively
+Deliberated how to redirect conversation productively
+Since we just laid out what's broken or missing, here's what I'd do next, in order — but I'll wait for you to confirm before drafting anything:
+
+Finish the charter's Data/Tools section — quick, since we already have the pieces (Texas_Residential_Real_Estate_Intelligence_2026.csv, single-family filter, Keras, k-fold). Just needs to be written into the doc.
+Draft the issue backlog (3-5 GitHub Issues describing the first working version) — this is graded and untouched so far.
+Draft agent-guardrails.md — also graded, also untouched.
+Draft reflection.md — last, since it asks you to compare this project to Housing, and that's easiest to write once the rest is settled.
+The Price_Per_SqFt verification (running that pandas check) is smaller and can slot in whenever — doesn't block the others.
+
+Want me to start with #1, the Data/Tools section, since it's the fastest one to close out?
+
+FileNotFoundError: [Errno 2] No such file or directory: 'texas_dataset.csv'
+C:\Users\Jamisond1501\Downloads\finalproject>
+
+
+Identified filename mismatch causing file not found error
+Identified filename mismatch causing file not found error
+That error's straightforward — Python's looking for a file named texas_dataset.csv, but the file you told me about earlier is named Texas_Residential_Real_Estate_Intelligence_2026.csv. Those are two different filenames, so if your script says texas_dataset.csv, that's the mismatch.
+
+A couple of things worth checking before we just swap the filename:
+
+Did you rename the CSV at some point, or is texas_dataset.csv a placeholder name from a script template (maybe one I gave you, or one from class) that you haven't updated yet?
+Is the CSV actually sitting in C:\Users\Jamisond1501\Downloads\finalproject — the same folder your terminal prompt shows you're in? If it's in Downloads itself, or somewhere else, that alone would cause this error regardless of the filename.
+Can you tell me exactly what filename shows up when you look at that folder, and whether the script currently says texas_dataset.csv or something else? That'll tell us whether it's a naming fix or a path fix.
+
